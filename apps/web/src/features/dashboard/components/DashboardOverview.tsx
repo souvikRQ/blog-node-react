@@ -1,12 +1,14 @@
 import React from 'react';
 import { useMyBlogs, useDeleteBlogMutation } from '@/features/blogs/hooks/useBlogs.js';
 import { useMyComments, useUpdateCommentStatusMutation, useDeleteCommentMutation } from '@/features/comments/hooks/useComments.js';
+import { useAuth } from '@/features/auth/context/auth-context.js';
 import { Button } from '@/components/ui/button.js';
 import { Link } from 'react-router-dom';
 import { Loader2, Plus, Edit, Trash2, ShieldOff, Check } from 'lucide-react';
 
 export const DashboardOverview: React.FC = () => {
-  const { data: blogsData, isLoading: blogsLoading } = useMyBlogs();
+  const { user } = useAuth();
+  const { data: blogsData, isLoading: blogsLoading } = useMyBlogs({}, !!user);
   const { data: commentsData, isLoading: commentsLoading } = useMyComments();
   const deleteBlogMutation = useDeleteBlogMutation();
   const updateCommentMutation = useUpdateCommentStatusMutation();

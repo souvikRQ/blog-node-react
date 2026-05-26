@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createCommentSchema } from '@blog/shared-schemas';
@@ -15,53 +15,40 @@ interface CommentFormProps {
 
 export const CommentForm: React.FC<CommentFormProps> = ({ blogId }) => {
   const { user } = useAuth();
-  const submitMutation = useSubmitCommentMutation(blogId);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm<CreateCommentDTO>({
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<CreateCommentDTO>({
     resolver: zodResolver(createCommentSchema),
-    defaultValues: {
-      content: '',
-      guestName: '',
-      guestEmail: '',
-    },
+    mode: 'onBlur',
+    defaultValues: { content: '', guestName: '', guestEmail: '' },
   });
 
-  const onSubmit = async (data: CreateCommentDTO) => {
-    try {
-      setError(null);
-      setSuccess(false);
-      // Clean guest fields if user is logged in
-      const payload = user
-        ? { content: data.content }
-        : data;
+  const submitMutation = useSubmitCommentMutation(blogId, reset);
 
-      await submitMutation.mutateAsync(payload);
-      setSuccess(true);
-      reset();
-    } catch (err: any) {
-      setError(err.message || 'Failed to submit comment. Please try again.');
-    }
+  const onSubmit = (data: CreateCommentDTO) => {
+    // Strip guest fields when user is authenticated
+    const payload = user ? { content: data.content } : data;
+    submitMutation.mutate(payload);
   };
+
+  // Auto-clear success banner after 3 seconds
+  useEffect(() => {
+    if (submitMutation.isSuccess) {
+      const timer = setTimeout(() => submitMutation.reset(), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [submitMutation.isSuccess]);
 
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-bold text-white">Leave a Comment</h3>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 glass-panel p-5 rounded-xl border border-white/5 bg-black/20">
-        {success && (
+        {submitMutation.isSuccess && (
           <div className="p-3 text-sm text-green-400 bg-green-500/10 rounded-md border border-green-500/20">
             Comment submitted successfully!
           </div>
         )}
-        {error && (
+        {submitMutation.isError && (
           <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md border border-destructive/20">
-            {error}
+            {(submitMutation.error as any)?.message || 'Failed to submit comment. Please try again.'}
           </div>
         )}
 
@@ -107,8 +94,8 @@ export const CommentForm: React.FC<CommentFormProps> = ({ blogId }) => {
           )}
         </div>
 
-        <Button type="submit" size="sm" className="bg-indigo-600 hover:bg-indigo-500 text-white" disabled={isSubmitting}>
-          {isSubmitting ? 'Posting...' : 'Post Comment'}
+        <Button type="submit" size="sm" className="bg-indigo-600 hover:bg-indigo-500 text-white" disabled={isSubmitting || submitMutation.isPending}>
+          {(isSubmitting || submitMutation.isPending) ? 'Posting...' : 'Post Comment'}
         </Button>
       </form>
     </div>

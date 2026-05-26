@@ -31,7 +31,7 @@ export const BlogDetailPage: React.FC = () => {
   return (
     <div className="py-10 px-4 space-y-12">
       <BlogDetail blog={blog} />
-      <CommentSection blogId={blog.id} />
+      <CommentSection blogId={blog.id} blogAuthor={blog.author} />
     </div>
   );
 };

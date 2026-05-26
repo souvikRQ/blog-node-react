@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { api } from '@/lib/api-client.js';
+import { queryClient } from '@/lib/query-client.js';
 import { User, LoginRequest, RegisterRequest } from '@blog/shared-types';
 
 interface AuthContextType {
@@ -43,6 +44,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = async () => {
     await api.post('/auth/logout');
+    queryClient.clear();
     setUser(null);
   };
 

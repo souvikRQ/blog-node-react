@@ -25,10 +25,11 @@ export const useBlogById = (id: string) => {
   });
 };
 
-export const useMyBlogs = (filters: BlogFilters = {}) => {
+export const useMyBlogs = (filters: BlogFilters = {}, enabled: boolean = true) => {
   return useQuery({
     queryKey: ['my-blogs', filters],
     queryFn: () => blogsApi.getMyBlogs(filters),
+    enabled,
   });
 };
 

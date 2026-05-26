@@ -17,13 +17,14 @@ export const useMyComments = () => {
   });
 };
 
-export const useSubmitCommentMutation = (blogId: string) => {
+export const useSubmitCommentMutation = (blogId: string, onResetForm?: () => void) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data: CreateCommentDTO) =>
       commentsApi.submitComment(blogId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments', blogId] });
+      onResetForm?.();
     },
   });
 };
