@@ -1,0 +1,74 @@
+revolte:
+  version: '1.0'
+  project: Revolte Test
+  appName: React Blog Site
+  config:
+    codeReview:
+      summarize: true
+      suggestFixes: true
+      commentStyle: Balanced
+    testSuite:
+      command: npm run test
+  workflow:
+    developerWorkflow:
+      enabled: true
+  env:
+    staging:
+      branch: main
+      codeReview: true
+      testSuite: true
+      services:
+        rid_1:
+          type: WEB_APP
+          name: web-app_service
+          entryPoint: index.js
+          properties:
+            indexPage: index.html
+            errorPage: error.html
+            enableCdn: false
+            variables:
+              VITE_API_URL: http://localhost:8080/api
+    qa:
+      branch: main
+      codeReview: true
+      testSuite: true
+      services:
+        rid_1:
+          type: WEB_APP
+          name: web-app_service
+          entryPoint: index.js
+          properties:
+            indexPage: index.html
+            errorPage: error.html
+            enableCdn: false
+            variables:
+              VITE_API_URL: http://localhost:8080/api
+    production:
+      branch: main
+      codeReview: true
+      testSuite: true
+      services:
+        rid_1:
+          type: WEB_APP
+          name: web-app_service
+          entryPoint: index.js
+          properties:
+            indexPage: index.html
+            errorPage: error.html
+            enableCdn: false
+            variables:
+              VITE_API_URL: http://localhost:8080/api
+    preview:
+      codeReview: true
+      testSuite: true
+      services:
+        rid_1:
+          type: WEB_APP
+          name: web-app_service
+          entryPoint: index.js
+          properties:
+            indexPage: index.html
+            errorPage: error.html
+            enableCdn: false
+            variables:
+              VITE_API_URL: http://localhost:8080/api
