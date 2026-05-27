@@ -27,7 +27,12 @@ revolte:
             port: 8080
             loadBalancerMode: dedicated
             variables:
-              BASE_URL: /api/v1
+              MONGO_URI: >-
+                mongodb+srv://souvikghosh_db_user:OYcO3xBCUrPiFXsw@react-node-based-blog-s.oihu01c.mongodb.net/?appName=react-node-based-blog-site
+              PORT: '8080'
+              JWT_SECRET: jwt-token-for-the-secrets
+              JWT_EXPIRES_IN: 7d
+              VITE_API_URL: http://localhost:8080/api
           specifications:
             cpu: 2
             memory: 1
@@ -46,7 +51,12 @@ revolte:
             port: 8080
             loadBalancerMode: dedicated
             variables:
-              BASE_URL: /api/v1
+              MONGO_URI: >-
+                mongodb+srv://souvikghosh_db_user:OYcO3xBCUrPiFXsw@react-node-based-blog-s.oihu01c.mongodb.net/?appName=react-node-based-blog-site
+              PORT: '8080'
+              JWT_SECRET: jwt-token-for-the-secrets
+              JWT_EXPIRES_IN: 7d
+              VITE_API_URL: http://localhost:8080/api
           specifications:
             cpu: 2
             memory: 1
@@ -65,7 +75,12 @@ revolte:
             port: 8080
             loadBalancerMode: dedicated
             variables:
-              BASE_URL: /api/v1
+              MONGO_URI: >-
+                mongodb+srv://souvikghosh_db_user:OYcO3xBCUrPiFXsw@react-node-based-blog-s.oihu01c.mongodb.net/?appName=react-node-based-blog-site
+              PORT: '8080'
+              JWT_SECRET: jwt-token-for-the-secrets
+              JWT_EXPIRES_IN: 7d
+              VITE_API_URL: http://localhost:8080/api
           specifications:
             cpu: 2
             memory: 1
