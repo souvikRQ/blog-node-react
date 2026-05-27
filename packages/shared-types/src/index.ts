@@ -100,3 +100,10 @@ export interface CreateCommentDTO {
 export interface UpdateCommentStatusDTO {
   status: CommentStatus;
 }
+
+// Password Change Payload
+export interface ChangePasswordRequest {
+  currentPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+}

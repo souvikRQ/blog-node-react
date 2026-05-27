@@ -216,3 +216,16 @@ export const createCommentSchema = z
 export const updateCommentStatusSchema = z.object({
     status: commentStatusSchema,
 })
+// ==========================================
+// 9. Password Change Payload schema
+// ==========================================
+export const changePasswordSchema = z
+    .object({
+        currentPassword: z.string().min(1, "Current password is required"),
+        newPassword: passwordSchema,
+        confirmNewPassword: z.string(),
+    })
+    .refine((data) => data.newPassword === data.confirmNewPassword, {
+        message: "New passwords must match",
+        path: ["confirmNewPassword"],
+    })
