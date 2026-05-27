@@ -6,7 +6,8 @@ import { ChangePasswordRequest } from '@blog/shared-types';
 import { changePassword } from '../api/settings-api.js';
 import { Button } from '@/components/ui/button.js';
 import { Input } from '@/components/ui/input.js';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card.js';
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card.js';
+import { ShieldCheck } from 'lucide-react';
 
 export const ChangePasswordForm: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
@@ -34,12 +35,13 @@ export const ChangePasswordForm: React.FC = () => {
   };
 
   return (
-    <Card className="w-full max-w-2xl glass-panel">
+    <Card className="w-full max-w-md glass-panel">
       <CardHeader>
-        <CardTitle className="text-xl font-bold tracking-tight text-white">
+        <CardTitle className="text-2xl text-center font-bold tracking-tight bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
           Change Password
         </CardTitle>
       </CardHeader>
+
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {error && (
@@ -58,7 +60,7 @@ export const ChangePasswordForm: React.FC = () => {
             <label className="text-sm font-medium text-muted-foreground">Current Password</label>
             <Input
               type="password"
-              placeholder="Enter your current password"
+              placeholder="••••••••"
               className="bg-background/50 border-white/10 text-white placeholder:text-muted-foreground/50"
               {...register('currentPassword')}
             />
@@ -71,7 +73,7 @@ export const ChangePasswordForm: React.FC = () => {
             <label className="text-sm font-medium text-muted-foreground">New Password</label>
             <Input
               type="password"
-              placeholder="Enter your new password"
+              placeholder="••••••••"
               className="bg-background/50 border-white/10 text-white placeholder:text-muted-foreground/50"
               {...register('newPassword')}
             />
@@ -84,7 +86,7 @@ export const ChangePasswordForm: React.FC = () => {
             <label className="text-sm font-medium text-muted-foreground">Confirm New Password</label>
             <Input
               type="password"
-              placeholder="Confirm your new password"
+              placeholder="••••••••"
               className="bg-background/50 border-white/10 text-white placeholder:text-muted-foreground/50"
               {...register('confirmNewPassword')}
             />
@@ -93,15 +95,20 @@ export const ChangePasswordForm: React.FC = () => {
             )}
           </div>
 
-          <Button 
-            type="submit" 
-            className="w-full bg-indigo-600 hover:bg-indigo-500 text-white mt-2" 
+          <Button
+            type="submit"
+            className="w-full bg-indigo-600 hover:bg-indigo-500 text-white mt-2"
             disabled={isSubmitting}
           >
             {isSubmitting ? 'Updating Password...' : 'Update Password'}
           </Button>
         </form>
       </CardContent>
+
+      <CardFooter className="flex justify-center gap-2 text-sm text-muted-foreground border-t border-white/5 pt-4">
+        <ShieldCheck className="w-4 h-4 text-indigo-400 flex-shrink-0" />
+        <span>Use a strong password of at least 8 characters.</span>
+      </CardFooter>
     </Card>
   );
 };

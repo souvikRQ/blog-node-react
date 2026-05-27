@@ -51,7 +51,7 @@ export const AppRoutes: React.FC = () => {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/blog/:slug" element={<BlogDetailPage />} />
-      
+
       <Route
         path="/login"
         element={
@@ -74,6 +74,14 @@ export const AppRoutes: React.FC = () => {
         element={
           <ProtectedRoute>
             <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <ProtectedRoute>
+            <SettingsPage />
           </ProtectedRoute>
         }
       />

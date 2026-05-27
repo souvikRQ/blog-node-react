@@ -25,4 +25,11 @@ router.post('/logout', authController.logout);
 
 router.get('/me', requireAuth, authController.getMe);
 
+router.post(
+  '/change-password',
+  requireAuth,
+  validate({ body: changePasswordSchema }),
+  authController.changePassword
+);
+
 export default router;
