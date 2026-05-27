@@ -2,7 +2,7 @@ import { UserModel } from '../users/user.model.js';
 import { hashPassword, comparePassword } from '../../utils/hash.js';
 import { signToken } from '../../utils/jwt.js';
 import { AppError } from '../../middleware/error.middleware.js';
-import { RegisterRequest, LoginRequest } from '@blog/shared-types';
+import { RegisterRequest, LoginRequest, ChangePasswordRequest } from '@blog/shared-types';
 
 export class AuthService {
   async register(data: RegisterRequest) {

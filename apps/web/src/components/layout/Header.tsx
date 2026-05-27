@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/features/auth/context/auth-context.js';
 import { Button } from '@/components/ui/button.js';
-import { PenTool, LogOut, LayoutDashboard, LogIn } from 'lucide-react';
+import { PenTool, LogOut, LayoutDashboard, LogIn, Settings } from 'lucide-react';
 
 export const Header: React.FC = () => {
   const { user, logout } = useAuth();
@@ -35,6 +35,12 @@ export const Header: React.FC = () => {
                 <Button variant="ghost" size="sm" className="text-white hover:bg-white/5 flex items-center gap-1">
                   <LayoutDashboard className="w-4 h-4 text-indigo-400" />
                   Dashboard
+                </Button>
+              </Link>
+              <Link to="/settings">
+                <Button variant="ghost" size="sm" className="text-white hover:bg-white/5 flex items-center gap-1">
+                  <Settings className="w-4 h-4 text-indigo-400" />
+                  Settings
                 </Button>
               </Link>
               <Button

@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage.js';
 import RegisterPage from './pages/RegisterPage.js';
 import DashboardPage from './pages/DashboardPage.js';
 import EditBlogPage from './pages/EditBlogPage.js';
+import SettingsPage from './pages/SettingsPage.js';
 import { Loader2 } from 'lucide-react';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
