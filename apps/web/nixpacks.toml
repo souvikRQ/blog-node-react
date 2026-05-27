@@ -1,0 +1,26 @@
+# nixpacks.toml for apps/web
+# Railway reads this when the service root is set to "apps/web"
+
+[phases.setup]
+# Use Node 20 LTS + enable Corepack so pnpm version is pinned via packageManager field
+nixPkgs = ["nodejs_20"]
+cmds = ["corepack enable"]
+
+[phases.install]
+# Install from the monorepo root so pnpm-lock.yaml is found
+cmds = [
+  "cd ../.. && corepack prepare pnpm@10.28.2 --activate && pnpm install --frozen-lockfile"
+]
+
+[phases.build]
+# Build shared packages first, then the React app with Vite
+cmds = [
+  "cd ../../packages/shared-types && pnpm run build",
+  "cd ../../packages/shared-schemas && pnpm run build",
+  "pnpm run build"
+]
+
+[start]
+# Serve the Vite dist folder with a lightweight static file server
+# Install serve globally during setup if not available, or use: npx serve dist
+cmd = "npx serve dist -l 3000 --no-clipboard"

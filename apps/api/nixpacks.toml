@@ -1,0 +1,26 @@
+# nixpacks.toml for apps/api
+# Railway reads this when the service root is set to "apps/api"
+
+[phases.setup]
+# Use Node 20 LTS + enable Corepack so pnpm version is pinned via packageManager field
+nixPkgs = ["nodejs_20"]
+cmds = ["corepack enable"]
+
+[phases.install]
+# Install from the monorepo root so pnpm-lock.yaml is found
+# The repo root is two levels up from apps/api
+cmds = [
+  "cd ../.. && corepack prepare pnpm@10.28.2 --activate && pnpm install --frozen-lockfile"
+]
+
+[phases.build]
+# Build shared packages first, then the API
+cmds = [
+  "cd ../../packages/shared-types && pnpm run build",
+  "cd ../../packages/shared-schemas && pnpm run build",
+  "pnpm run build"
+]
+
+[start]
+# Start the compiled Express server
+cmd = "node dist/index.js"
