@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:deps": "cd ../../packages/shared-types && tsc && cd ../shared-schemas && tsc",
+    "build:full": "pnpm run build:deps && pnpm run build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "vitest run"

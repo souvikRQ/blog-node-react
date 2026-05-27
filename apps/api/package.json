@@ -6,6 +6,8 @@
     "scripts": {
         "dev": "tsx watch src/index.ts",
         "build": "tsc",
+        "build:deps": "cd ../../packages/shared-types && tsc && cd ../shared-schemas && tsc",
+        "build:full": "pnpm run build:deps && pnpm run build",
         "start": "node dist/index.js",
         "test": "jest --config jest.config.js --runInBand"
     },
